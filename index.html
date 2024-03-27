@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHA-1 Hash Generator</title>
+    <!-- Include the external CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="column">
+            <h2>Hash String</h2>
+            <form id="stringForm">
+                <label for="stringInput">Enter a string:</label><br>
+                <input type="text" id="stringInput" name="stringInput"><br><br>
+                <input type="submit" value="Hash String">
+            </form>
+            <div id="stringResult"></div>
+        </div>
+        <div class="column">
+            <h2>Hash File</h2>
+            <form id="fileForm">
+                <label for="fileInput">Upload a file:</label><br>
+                <input type="file" id="fileInput" name="fileInput"><br><br>
+                <input type="submit" value="Hash File">
+            </form>
+            <div id="fileResult"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('stringForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var message = document.getElementById('stringInput').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:8000', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        document.getElementById('stringResult').textContent = xhr.responseText;
+                    } else {
+                        document.getElementById('stringResult').textContent = 'Error: ' + xhr.statusText;
+                    }
+                }
+            };
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('message=' + encodeURIComponent(message));
+        });
+
+        document.getElementById('fileForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var fileInput = document.getElementById('fileInput');
+            var file = fileInput.files[0];
+            var formData = new FormData();
+            formData.append('file', file);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:8000', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        document.getElementById('fileResult').textContent = xhr.responseText;
+                    } else {
+                        document.getElementById('fileResult').textContent = 'Error: ' + xhr.statusText;
+                    }
+                }
+            };
+            xhr.send(formData);
+        });
+    </script>
+</body>
+</html>
