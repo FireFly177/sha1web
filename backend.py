@@ -24,6 +24,9 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'text/plain')
         self.send_header('Access-Control-Allow-Origin', '*')  # Allow requests from any origin
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        self.send_header("Access-Control-Max-Age", "86400")
         self.end_headers()
 
         self.wfile.write(hashed_message.encode())

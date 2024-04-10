@@ -37,7 +37,7 @@
             event.preventDefault();
             var message = document.getElementById('stringInput').value;
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost:8000', true);
+            xhr.open('POST', 'https://fireflylab.cc:9993', true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
@@ -58,7 +58,7 @@
             var formData = new FormData();
             formData.append('file', file);
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost:8000', true);
+            xhr.open('POST', 'https://fireflylab.cc:9993', true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
